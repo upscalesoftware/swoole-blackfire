@@ -15,6 +15,6 @@
         "blackfire/php-sdk": "^1.16"
     },
     "autoload-dev": {
-        "psr-4": {"Upscale\\Swoole\\": "src/"}
+        "psr-4": {"Upscale\\Swoole\\Blackfire\\": "src/"}
     }
 }

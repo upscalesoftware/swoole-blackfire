@@ -1,5 +1,5 @@
 <?php
-namespace Upscale\Swoole;
+namespace Upscale\Swoole\Blackfire;
 
 class Profiler
 {

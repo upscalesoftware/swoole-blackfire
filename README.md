@@ -21,9 +21,9 @@ require 'vendor/autoload.php';
 
 $server = new \Swoole\Http\Server('127.0.0.1', 8080);
 
-$profiler = new \Upscale\Swoole\Profiler();
+$profiler = new \Upscale\Swoole\Blackfire\Profiler();
 
-$server->on('request', function (\Swoole\Http\Request $request, \Swoole\Http\Response $response) use ($profiler) {
+$server->on('request', function ($request, $response) use ($profiler) {
     // Start profiling at the very beginning of request
     $profiler->start($request);
 

@@ -1,8 +1,8 @@
 {
     "name": "upscale/swoole-blackfire",
-    "description": "Blackfire profiler for applications running on Swoole web-server",
+    "description": "Blackfire profiler for PHP applications running on Swoole web-server",
     "version": "1.0.0",
-    "keywords": ["Swoole", "Blackfire", "Profiler"],
+    "keywords": ["Swoole", "Blackfire", "profiler", "profiling"],
     "homepage": "https://github.com/upscalesoftware/swoole-blackfire",
     "license": "Apache-2.0",
     "authors": [
@@ -11,10 +11,11 @@
             "email": "info@upscalesoftware.com"
         }
     ],
-    "require-dev": {
+    "require": {
+        "ext-swoole": ">=2.0",
         "blackfire/php-sdk": "^1.16"
     },
-    "autoload-dev": {
+    "autoload": {
         "psr-4": {"Upscale\\Swoole\\Blackfire\\": "src/"}
     }
 }

@@ -24,22 +24,21 @@ $server = new \Swoole\Http\Server('127.0.0.1', 8080);
 $profiler = new \Upscale\Swoole\Blackfire\Profiler();
 
 $server->on('request', function ($request, $response) use ($profiler) {
-    // Start profiling at the very beginning of request
     $profiler->start($request);
 
-    // Execute whatever needs to be profiled
     $response->header('Content-Type', 'text/plain');
     $body = 'Hello World';
 
-    // Stop profiling before sending headers (for profiler to append headers)
     $profiler->stop($request, $response);
 
-    // Send response body
     $response->end($body);
 });
 
 $server->start();
 ```
+
+**Note:** Profiler must be stopped before sending response body.
+Profiling results are being reported in the response headers.
 
 ## License
 

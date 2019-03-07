@@ -102,6 +102,10 @@ $server->on('request', function ($request, $response) use ($profiler) {
 
 Currently, only one pair of the profiler start/stop calls is permitted per request.
 
+## Contributing
+
+Pull Requests with fixes and improvements are welcome!
+
 ## License
 
 Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).

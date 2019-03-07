@@ -77,7 +77,7 @@ class Proxy extends \Swoole\Http\Response
     public function rawcookie(
         $name, $value = null, $expires = null, $path = null, $domain = null, $secure = null, $httponly = null
     ) {
-        return $this->subject->cookie($name, $value, $expires, $path, $domain, $secure, $httponly);
+        return $this->subject->rawcookie($name, $value, $expires, $path, $domain, $secure, $httponly);
     }
 
     /**

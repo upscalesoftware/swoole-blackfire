@@ -31,9 +31,9 @@ Activate profiling of all requests using one of the following methods:
     $server->on('request', $profiler->wrap(function ($request, $response) {
         $response->header('Content-Type', 'text/plain');
         $response->end(
-            'CRC32: ' . hash_file('crc32b', __FILE__) . PHP_EOL .
-            'MD5: '   . md5_file(__FILE__) . PHP_EOL .
-            'SHA1: '  . sha1_file(__FILE__) . PHP_EOL
+            'CRC32: ' . hash_file('crc32b', __FILE__) . "\n" .
+            'MD5: '   . md5_file(__FILE__) . "\n" .
+            'SHA1: '  . sha1_file(__FILE__) . "\n"
         );    
     }));
     ```
@@ -42,9 +42,9 @@ Activate profiling of all requests using one of the following methods:
     $server->on('request', function ($request, $response) {
         $response->header('Content-Type', 'text/plain');
         $response->end(
-            'CRC32: ' . hash_file('crc32b', __FILE__) . PHP_EOL .
-            'MD5: '   . md5_file(__FILE__) . PHP_EOL .
-            'SHA1: '  . sha1_file(__FILE__) . PHP_EOL
+            'CRC32: ' . hash_file('crc32b', __FILE__) . "\n" .
+            'MD5: '   . md5_file(__FILE__) . "\n" .
+            'SHA1: '  . sha1_file(__FILE__) . "\n"
         );
     });
     
@@ -64,11 +64,11 @@ $server->on('request', function ($request, $response) use ($profiler) {
     $response->header('Content-Type', 'text/plain');
 
     $profiler->inspect($request, $response, function ($request, $response) {
-        $response->write('CRC32: ' . hash_file('crc32b', __FILE__) . PHP_EOL);    
+        $response->write('CRC32: ' . hash_file('crc32b', __FILE__) . "\n");    
     });
     
-    $response->write('MD5: '  . md5_file(__FILE__) . PHP_EOL);
-    $response->write('SHA1: ' . sha1_file(__FILE__) . PHP_EOL);
+    $response->write('MD5: '  . md5_file(__FILE__) . "\n");
+    $response->write('SHA1: ' . sha1_file(__FILE__) . "\n");
 });
 ```
 
@@ -88,13 +88,13 @@ $profiler = new \Upscale\Swoole\Blackfire\Profiler();
 $server->on('request', function ($request, $response) use ($profiler) {
     $response->header('Content-Type', 'text/plain');
     
-    $output = 'CRC32: ' . hash_file('crc32b', __FILE__) . PHP_EOL;
+    $output = 'CRC32: ' . hash_file('crc32b', __FILE__) . "\n";
     
     $profiler->start($request);
-    $output .= 'MD5: ' . md5_file(__FILE__) . PHP_EOL;
+    $output .= 'MD5: ' . md5_file(__FILE__) . "\n";
     $profiler->stop($request, $response);
     
-    $output .= 'SHA1: ' . sha1_file(__FILE__) . PHP_EOL
+    $output .= 'SHA1: ' . sha1_file(__FILE__) . "\n"
     
     $response->end($output);
 });

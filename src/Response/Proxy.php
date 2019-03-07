@@ -45,7 +45,9 @@ class Proxy extends \Swoole\Http\Response
      */
     public function header($key, $value, $ucwords = null)
     {
-        return $this->subject->header($key, $value, $ucwords);
+        $result = $this->subject->header($key, $value, $ucwords);
+        $this->header = $this->subject->header;
+        return $result;
     }
 
     /**
@@ -61,7 +63,9 @@ class Proxy extends \Swoole\Http\Response
     public function cookie(
         $name, $value = null, $expires = null, $path = null, $domain = null, $secure = null, $httponly = null
     ) {
-        return $this->subject->cookie($name, $value, $expires, $path, $domain, $secure, $httponly);
+        $result = $this->subject->cookie($name, $value, $expires, $path, $domain, $secure, $httponly);
+        $this->cookie = $this->subject->cookie;
+        return $result;
     }
 
     /**
@@ -77,7 +81,9 @@ class Proxy extends \Swoole\Http\Response
     public function rawcookie(
         $name, $value = null, $expires = null, $path = null, $domain = null, $secure = null, $httponly = null
     ) {
-        return $this->subject->rawcookie($name, $value, $expires, $path, $domain, $secure, $httponly);
+        $result = $this->subject->rawcookie($name, $value, $expires, $path, $domain, $secure, $httponly);
+        $this->cookie = $this->subject->cookie;
+        return $result;
     }
 
     /**

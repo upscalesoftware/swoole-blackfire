@@ -4,8 +4,10 @@ Blackfire Profiler for Swoole
 This library enables profiling of PHP applications running on [Swoole](https://www.swoole.co.uk/) web-server via [Blackfire](https://blackfire.io/).
 
 **Features:**
+- Transparent request profiling
+- Selective sub-system profiling
 - Custom start/stop profiling calls
-- Compatible with [Blackfire Companion](https://blackfire.io/docs/integrations/) browser extensions
+- [Blackfire Companion](https://blackfire.io/docs/integrations/) integration
 
 ## Installation
 
@@ -13,32 +15,92 @@ The library is to be installed via [Composer](https://getcomposer.org/) as a dev
 ```bash
 composer require upscale/swoole-blackfire --dev
 ```
-## Basic Usage
+## Usage
 
-Surround interested block of code with the profiler start/stop calls:
+### Request Profiling
+
+The easiest way to start profiling is to activate the profiler globally for all requests from start to finish.
+This approach is by design completely transparent to an application running on the server.
+No code changes are needed beyond editing a few lines of code in the server entry point.
+
+Activate profiling of all requests using one of the following methods:
+- Wrap the server middleware in the profiler decorator:
+    ```php
+    $profiler = new \Upscale\Swoole\Blackfire\Profiler();
+    
+    $server->on('request', $profiler->wrap(function ($request, $response) {
+        $response->header('Content-Type', 'text/plain');
+        $response->end(
+            'CRC32: ' . hash_file('crc32b', __FILE__) . PHP_EOL .
+            'MD5: '   . md5_file(__FILE__) . PHP_EOL .
+            'SHA1: '  . sha1_file(__FILE__) . PHP_EOL
+        );    
+    }));
+    ```
+- Install the profiler instrumentation retroactively:
+    ```php
+    $server->on('request', function ($request, $response) {
+        $response->header('Content-Type', 'text/plain');
+        $response->end(
+            'CRC32: ' . hash_file('crc32b', __FILE__) . PHP_EOL .
+            'MD5: '   . md5_file(__FILE__) . PHP_EOL .
+            'SHA1: '  . sha1_file(__FILE__) . PHP_EOL
+        );
+    });
+    
+    $profiler = new \Upscale\Swoole\Blackfire\Profiler();
+    $profiler->instrument($server);
+    ```
+
+### Selective Profiling
+
+It is possible to limit the profiling scope by wrapping the interested code into a profiler call.
+
+Wrap the code intended to be profiled in the profiler call: 
 ```php
-require 'vendor/autoload.php';
-
-$server = new \Swoole\Http\Server('127.0.0.1', 8080);
-
 $profiler = new \Upscale\Swoole\Blackfire\Profiler();
 
 $server->on('request', function ($request, $response) use ($profiler) {
-    $profiler->start($request);
-
     $response->header('Content-Type', 'text/plain');
-    $body = 'Hello World';
 
-    $profiler->stop($request, $response);
-
-    $response->end($body);
+    $profiler->inspect($request, $response, function ($request, $response) {
+        $response->write('CRC32: ' . hash_file('crc32b', __FILE__) . PHP_EOL);    
+    });
+    
+    $response->write('MD5: '  . md5_file(__FILE__) . PHP_EOL);
+    $response->write('SHA1: ' . sha1_file(__FILE__) . PHP_EOL);
 });
-
-$server->start();
 ```
 
-**Note:** Profiler must be stopped before sending response body.
-Profiling results are being reported in the response headers.
+Currently, only one profiler inspection call is permitted per request.
+
+### Manual Profiling
+
+Depending on the application design and complexity, it may be difficult to precisely wrap desired code with the profiler call.
+Profiler start/stop calls can be manually placed at different call stack levels to further narrow down the inspection scope.
+With this approach, a developer must guarantee the symmetry of the calls and consider the response population workflow.
+The profiling must be stopped before sending the response body to be able to send the results in the response headers.  
+
+Surround the code intended to be profiled with the profiler start/stop calls:
+```php
+$profiler = new \Upscale\Swoole\Blackfire\Profiler();
+
+$server->on('request', function ($request, $response) use ($profiler) {
+    $response->header('Content-Type', 'text/plain');
+    
+    $output = 'CRC32: ' . hash_file('crc32b', __FILE__) . PHP_EOL;
+    
+    $profiler->start($request);
+    $output .= 'MD5: ' . md5_file(__FILE__) . PHP_EOL;
+    $profiler->stop($request, $response);
+    
+    $output .= 'SHA1: ' . sha1_file(__FILE__) . PHP_EOL
+    
+    $response->end($output);
+});
+```
+
+Currently, only one pair of the profiler start/stop calls is permitted per request.
 
 ## License
 

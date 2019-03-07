@@ -1,7 +1,7 @@
 {
     "name": "upscale/swoole-blackfire",
     "description": "Blackfire profiler for PHP applications running on Swoole web-server",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "keywords": ["Swoole", "Blackfire", "profiler", "profiling"],
     "homepage": "https://github.com/upscalesoftware/swoole-blackfire",
     "license": "Apache-2.0",

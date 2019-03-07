@@ -16,6 +16,7 @@ class Proxy extends \Swoole\Http\Response
     public function __construct(\Swoole\Http\Response $subject)
     {
         $this->subject = $subject;
+        $this->fd = $subject->fd;
     }
 
     /**

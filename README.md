@@ -32,19 +32,19 @@ Activate profiling of all requests using one of the following methods:
         $response->header('Content-Type', 'text/plain');
         $response->end(
             'CRC32: ' . hash_file('crc32b', __FILE__) . "\n" .
-            'MD5: '   . md5_file(__FILE__) . "\n" .
-            'SHA1: '  . sha1_file(__FILE__) . "\n"
+            'MD5:   ' . md5_file(__FILE__) . "\n" .
+            'SHA1:  ' . sha1_file(__FILE__) . "\n"
         );    
     }));
     ```
-- Install the profiler instrumentation retroactively:
+- Or, install the profiler instrumentation retroactively:
     ```php
     $server->on('request', function ($request, $response) {
         $response->header('Content-Type', 'text/plain');
         $response->end(
             'CRC32: ' . hash_file('crc32b', __FILE__) . "\n" .
-            'MD5: '   . md5_file(__FILE__) . "\n" .
-            'SHA1: '  . sha1_file(__FILE__) . "\n"
+            'MD5:   ' . md5_file(__FILE__) . "\n" .
+            'SHA1:  ' . sha1_file(__FILE__) . "\n"
         );
     });
     
@@ -67,8 +67,8 @@ $server->on('request', function ($request, $response) use ($profiler) {
         $response->write('CRC32: ' . hash_file('crc32b', __FILE__) . "\n");    
     });
     
-    $response->write('MD5: '  . md5_file(__FILE__) . "\n");
-    $response->write('SHA1: ' . sha1_file(__FILE__) . "\n");
+    $response->write('MD5:   ' . md5_file(__FILE__) . "\n");
+    $response->write('SHA1:  ' . sha1_file(__FILE__) . "\n");
 });
 ```
 
@@ -91,10 +91,10 @@ $server->on('request', function ($request, $response) use ($profiler) {
     $output = 'CRC32: ' . hash_file('crc32b', __FILE__) . "\n";
     
     $profiler->start($request);
-    $output .= 'MD5: ' . md5_file(__FILE__) . "\n";
+    $output .= 'MD5:   ' . md5_file(__FILE__) . "\n";
     $profiler->stop($request, $response);
     
-    $output .= 'SHA1: ' . sha1_file(__FILE__) . "\n"
+    $output .= 'SHA1:  ' . sha1_file(__FILE__) . "\n"
     
     $response->end($output);
 });

@@ -102,6 +102,11 @@ $server->on('request', function ($request, $response) use ($profiler) {
 
 Currently, only one pair of the profiler start/stop calls is permitted per request.
 
+## Limitations
+
+The profiling implicitly stops before sending the response body and the results are added to the response headers.
+Currently, only one profiling session initiated by `inspect()` or `start/stop()` calls is supported per request.
+
 ## Contributing
 
 Pull Requests with fixes and improvements are welcome!

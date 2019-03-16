@@ -54,7 +54,7 @@ Activate profiling of all requests using one of the following methods:
 
 ### Selective Profiling
 
-It is possible to limit the profiling scope by wrapping the interested code into a profiler call.
+It is possible to limit the profiling scope by wrapping the interested code in a profiler call.
 
 Wrap the code intended to be profiled in the profiler call: 
 ```php
@@ -76,7 +76,7 @@ Currently, only one profiler inspection call is permitted per request.
 
 ### Manual Profiling
 
-Depending on the application design and complexity, it may be difficult to precisely wrap desired code with the profiler call.
+Depending on the application design and complexity, it may be difficult to precisely wrap desired code in the profiler call.
 Profiler start/stop calls can be manually placed at different call stack levels to further narrow down the inspection scope.
 With this approach, a developer must guarantee the symmetry of the calls and consider the response population workflow.
 The profiling must be stopped before sending the response body to be able to send the results in the response headers.  

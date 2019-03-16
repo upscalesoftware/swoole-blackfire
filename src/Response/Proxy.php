@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright © Upscale Software. All rights reserved.
+ * See COPYRIGHT.txt for license details.
+ */
 namespace Upscale\Swoole\Blackfire\Response;
 
 class Proxy extends \Swoole\Http\Response

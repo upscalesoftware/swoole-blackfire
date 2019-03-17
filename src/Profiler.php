@@ -25,11 +25,8 @@ class Profiler
      */
     public function instrument(\Swoole\Http\Server $server)
     {
-        $middleware = $server->onRequest;
-        if (!is_callable($middleware)) {
-            throw new \UnexpectedValueException('Server middleware has not been initialized yet.');
-        }
-        $server->on('request', $this->wrap($middleware));
+        $server = new \Upscale\Swoole\Reflection\Http\Server($server);
+        $server->setMiddleware($this->wrap($server->getMiddleware()));
     }
 
     /**

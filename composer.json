@@ -13,7 +13,8 @@
     ],
     "require": {
         "ext-swoole": ">=2.0",
-        "blackfire/php-sdk": "^1.16"
+        "blackfire/php-sdk": "^1.16",
+        "upscale/swoole-reflection": "^1.1"
     },
     "autoload": {
         "psr-4": {"Upscale\\Swoole\\Blackfire\\": "src/"}

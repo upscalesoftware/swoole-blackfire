@@ -43,8 +43,11 @@ class ProfilerDecorator
             $this->profiler->stop($request, $response);
         });
         if ($this->profiler->start($request)) {
-            $middleware($request, $observedResponse);
-            $this->profiler->stop($request, $response);
+            try {
+                $middleware($request, $observedResponse);
+            } finally {
+                $this->profiler->stop($request, $response);
+            }
         } else {
             $middleware($request, $response);
         }

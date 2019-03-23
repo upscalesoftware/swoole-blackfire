@@ -23,34 +23,20 @@ The easiest way to start profiling is to activate the profiler globally for all 
 This approach is by design completely transparent to an application running on the server.
 No code changes are needed beyond editing a few lines of code in the server entry point.
 
-Activate profiling of all requests using one of the following methods:
-- Wrap the server middleware in the profiler decorator:
-    ```php
-    $profiler = new \Upscale\Swoole\Blackfire\Profiler();
-    
-    $server->on('request', $profiler->wrap(function ($request, $response) {
-        $response->header('Content-Type', 'text/plain');
-        $response->end(
-            'CRC32: ' . hash_file('crc32b', __FILE__) . "\n" .
-            'MD5:   ' . md5_file(__FILE__) . "\n" .
-            'SHA1:  ' . sha1_file(__FILE__) . "\n"
-        );    
-    }));
-    ```
-- Or, install the profiler instrumentation retroactively:
-    ```php
-    $server->on('request', function ($request, $response) {
-        $response->header('Content-Type', 'text/plain');
-        $response->end(
-            'CRC32: ' . hash_file('crc32b', __FILE__) . "\n" .
-            'MD5:   ' . md5_file(__FILE__) . "\n" .
-            'SHA1:  ' . sha1_file(__FILE__) . "\n"
-        );
-    });
-    
-    $profiler = new \Upscale\Swoole\Blackfire\Profiler();
-    $profiler->instrument($server);
-    ```
+Install the profiling instrumentation for all requests:
+```php
+$server->on('request', function ($request, $response) {
+    $response->header('Content-Type', 'text/plain');
+    $response->end(
+        'CRC32: ' . hash_file('crc32b', __FILE__) . "\n" .
+        'MD5:   ' . md5_file(__FILE__) . "\n" .
+        'SHA1:  ' . sha1_file(__FILE__) . "\n"
+    );
+});
+
+$profiler = new \Upscale\Swoole\Blackfire\Profiler();
+$profiler->instrument($server);
+```
 
 ### Selective Profiling
 

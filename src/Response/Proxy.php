@@ -97,7 +97,10 @@ class Proxy extends \Swoole\Http\Response
      */
     public function status($code, $reason = null)
     {
-        return $this->subject->status($code, $reason);
+        if ($reason !== null) {
+            return $this->subject->status($code, $reason);
+        }
+        return $this->subject->status($code);
     }
 
     /**

@@ -38,12 +38,12 @@ class ProfilerDecorator
     public function __invoke(\Swoole\Http\Request $request, \Swoole\Http\Response $response)
     {
         $middleware = $this->subject;
-        $observedResponse = new Response\Observable($response);
-        $observedResponse->onHeadersSentBefore(function () use ($request, $response) {
-            $this->profiler->stop($request, $response);
-        });
         if ($this->profiler->start($request)) {
             try {
+                $observedResponse = new Response\Observable($response);
+                $observedResponse->onHeadersSentBefore(function () use ($request, $response) {
+                    $this->profiler->stop($request, $response);
+                });
                 $middleware($request, $observedResponse);
             } finally {
                 $this->profiler->stop($request, $response);

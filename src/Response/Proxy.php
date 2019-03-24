@@ -92,11 +92,12 @@ class Proxy extends \Swoole\Http\Response
 
     /**
      * @param int $code
+     * @param string|null $reason
      * @return mixed
      */
-    public function status($code)
+    public function status($code, $reason = null)
     {
-        return $this->subject->status($code);
+        return $this->subject->status($code, $reason);
     }
 
     /**

@@ -5,6 +5,8 @@
  */
 namespace Upscale\Swoole\Blackfire;
 
+use Upscale\Swoole\Reflection\Http\Response;
+
 class ProfilerDecorator
 {
     /**

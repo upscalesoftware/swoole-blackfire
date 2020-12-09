@@ -19,9 +19,9 @@ composer require upscale/swoole-blackfire --dev
 
 ### Request Profiling
 
-The easiest way to start profiling is to activate the profiler globally for all requests from start to finish.
+The easiest way to start profiling is to activate the profiler for all requests from start to finish.
 This approach is by design completely transparent to an application running on the server.
-No code changes are needed beyond editing a few lines of code in the server entry point.
+No changes are needed beyond adding a few lines of code to the server entry point.
 
 Install the profiling instrumentation for all requests:
 ```php

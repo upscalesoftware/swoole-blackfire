@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright © Upscale Software. All rights reserved.
- * See COPYRIGHT.txt for license details.
+ * See LICENSE.txt for license details.
  */
 namespace Upscale\Swoole\Blackfire;
 

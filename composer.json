@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=7.1",
-        "ext-swoole": "^4.0",
+        "ext-openswoole": "^4.10.0",
         "blackfire/php-sdk": "^1.16",
         "upscale/swoole-reflection": "^1.2"
     },

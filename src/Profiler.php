@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Copyright © Upscale Software. All rights reserved.
  * See LICENSE.txt for license details.
@@ -7,23 +8,14 @@ namespace Upscale\Swoole\Blackfire;
 
 class Profiler
 {
-    /**
-     * @var \BlackfireProbe
-     */
-    protected $probe;
+    protected ?\BlackfireProbe $probe = null;
 
-    /**
-     * @var \Swoole\Http\Request
-     */
-    protected $request;
+    protected ?\Swoole\Http\Request $request = null;
 
     /**
      * Install profiler instrumentation
-     *
-     * @param \Swoole\Http\Server $server
-     * @throws \UnexpectedValueException
      */
-    public function instrument(\Swoole\Http\Server $server)
+    public function instrument(\Swoole\Http\Server $server): void
     {
         $server = new \Upscale\Swoole\Reflection\Http\Server($server);
         $server->setMiddleware($this->wrap($server->getMiddleware()));
@@ -31,12 +23,8 @@ class Profiler
 
     /**
      * Invoke a given middleware decorated for profiling
-     * 
-     * @param \Swoole\Http\Request $request
-     * @param \Swoole\Http\Response $response
-     * @param callable $middleware
      */
-    public function inspect(\Swoole\Http\Request $request, \Swoole\Http\Response $response, callable $middleware)
+    public function inspect(\Swoole\Http\Request $request, \Swoole\Http\Response $response, callable $middleware): void
     {
         $middleware = $this->wrap($middleware);
         $middleware($request, $response);
@@ -44,22 +32,16 @@ class Profiler
 
     /**
      * Decorate a given middleware for profiling
-     * 
-     * @param callable $middleware
-     * @return ProfilerDecorator
      */
-    public function wrap(callable $middleware)
+    public function wrap(callable $middleware): callable
     {
         return new ProfilerDecorator($middleware, $this);
     }
 
     /**
      * Start profiling a given request
-     *
-     * @param \Swoole\Http\Request $request
-     * @return bool
      */
-    public function start(\Swoole\Http\Request $request)
+    public function start(\Swoole\Http\Request $request): bool
     {
         if (!$this->probe && isset($request->header['x-blackfire-query'])) {
             $this->probe = new \BlackfireProbe($request->header['x-blackfire-query']);
@@ -75,12 +57,8 @@ class Profiler
 
     /**
      * Stop profiling a given request and send results in a response
-     *
-     * @param \Swoole\Http\Request $request
-     * @param \Swoole\Http\Response $response
-     * @return bool
      */
-    public function stop(\Swoole\Http\Request $request, \Swoole\Http\Response $response)
+    public function stop(\Swoole\Http\Request $request, \Swoole\Http\Response $response): bool
     {
         if ($this->probe && $this->probe->isEnabled() && $this->request === $request) {
             $this->probe->close();
@@ -95,7 +73,7 @@ class Profiler
     /**
      * Reset profiling session
      */
-    public function reset()
+    public function reset(): void
     {
         if ($this->probe && $this->probe->isEnabled()) {
             $this->probe->close();

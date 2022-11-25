@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Copyright © Upscale Software. All rights reserved.
  * See LICENSE.txt for license details.
@@ -9,21 +10,13 @@ use Upscale\Swoole\Reflection\Http\Response;
 
 class ProfilerDecorator
 {
-    /**
-     * @var callable
-     */
+    /** @var callable */
     protected $subject;
 
-    /**
-     * @var Profiler
-     */
-    protected $profiler;
+    protected Profiler $profiler;
 
     /**
      * Inject dependencies
-     * 
-     * @param callable $subject
-     * @param Profiler $profiler
      */
     public function __construct(callable $subject, Profiler $profiler)
     {
@@ -33,11 +26,8 @@ class ProfilerDecorator
 
     /**
      * Invoke the underlying middleware surrounding it with the profiler start/stop calls  
-     * 
-     * @param \Swoole\Http\Request $request
-     * @param \Swoole\Http\Response $response
      */
-    public function __invoke(\Swoole\Http\Request $request, \Swoole\Http\Response $response)
+    public function __invoke(\Swoole\Http\Request $request, \Swoole\Http\Response $response): void
     {
         $middleware = $this->subject;
         if ($this->profiler->start($request)) {

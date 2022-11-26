@@ -1,0 +1,48 @@
+name: Tests
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 4 * * 6'
+
+jobs:
+  tests:
+    name: Test ${{ matrix.swoole-version }} against php ${{ matrix.php-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        php-version: [ '8.0', '8.1' ]
+        swoole-version:
+          - swoole-4.4.26
+          - swoole-4.5.11
+          - swoole-4.6.7
+          - swoole-4.7.1
+          - swoole-4.8.12
+          - swoole-5.0.1
+          - swoole
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+      - name: Setup PHP environment
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: pecl, composer, phpunit, blackfire
+          extensions: ${{ matrix.swoole-version }}, blackfire
+          coverage: none
+        env:
+          fail-fast: true
+          BLACKFIRE_SERVER_ID: ${{ secrets.BLACKFIRE_SERVER_ID }}
+          BLACKFIRE_SERVER_TOKEN: ${{ secrets.BLACKFIRE_SERVER_TOKEN }}
+          BLACKFIRE_CLIENT_ID: ${{ secrets.BLACKFIRE_CLIENT_ID }}
+          BLACKFIRE_CLIENT_TOKEN: ${{ secrets.BLACKFIRE_CLIENT_TOKEN }}
+      - name: Verify PHP environment
+        run: |
+          php --ri swoole
+          php --ri blackfire
+      - name: Install dependencies
+        run: composer install -n
+      - name: Run test suite
+        run: vendor/bin/phpunit

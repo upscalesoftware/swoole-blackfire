@@ -1,4 +1,4 @@
-Blackfire Profiler for Swoole
+Blackfire Profiler for Swoole [![Build Status](https://github.com/upscalesoftware/swoole-blackfire/workflows/Tests/badge.svg?branch=master)](https://github.com/upscalesoftware/swoole-blackfire/actions?query=workflow%3ATests+branch%3Amaster)
 =============================
 
 This library enables profiling of PHP applications running on [Swoole](https://www.swoole.co.uk/) web-server via [Blackfire](https://blackfire.io/).
@@ -80,7 +80,7 @@ $server->on('request', function ($request, $response) use ($profiler) {
     $output .= 'MD5:   ' . md5_file(__FILE__) . "\n";
     $profiler->stop($request, $response);
     
-    $output .= 'SHA1:  ' . sha1_file(__FILE__) . "\n"
+    $output .= 'SHA1:  ' . sha1_file(__FILE__) . "\n";
     
     $response->end($output);
 });

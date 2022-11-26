@@ -1,7 +1,7 @@
 Blackfire Profiler for Swoole [![Build Status](https://github.com/upscalesoftware/swoole-blackfire/workflows/Tests/badge.svg?branch=master)](https://github.com/upscalesoftware/swoole-blackfire/actions?query=workflow%3ATests+branch%3Amaster)
 =============================
 
-This library enables profiling of PHP applications running on [Swoole](https://www.swoole.co.uk/) web-server via [Blackfire](https://blackfire.io/).
+This library enables profiling of PHP applications running on [Swoole](https://github.com/swoole/swoole-src) / [Open Swoole](https://github.com/openswoole/swoole-src) web-server via [Blackfire](https://blackfire.io/).
 
 **Features:**
 - Transparent request profiling

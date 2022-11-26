@@ -22,6 +22,12 @@ jobs:
           - swoole-4.8.12
           - swoole-5.0.1
           - swoole
+          - openswoole-4.7.2
+          - openswoole-4.8.1
+          - openswoole-4.9.1
+          - openswoole-4.10.0
+          - openswoole-4.11.1
+          - openswoole-4.12.0
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
@@ -40,7 +46,7 @@ jobs:
           BLACKFIRE_CLIENT_TOKEN: ${{ secrets.BLACKFIRE_CLIENT_TOKEN }}
       - name: Verify PHP environment
         run: |
-          php --ri swoole
+          php --ri swoole || php --ri openswoole
           php --ri blackfire
       - name: Install dependencies
         run: composer install -n

@@ -8,9 +8,9 @@ namespace Upscale\Swoole\Blackfire;
 
 class Profiler
 {
-    protected ?\BlackfireProbe $probe = null;
+    private ?\BlackfireProbe $probe = null;
 
-    protected ?\Swoole\Http\Request $request = null;
+    private ?\Swoole\Http\Request $request = null;
 
     /**
      * Install profiler instrumentation
@@ -33,7 +33,7 @@ class Profiler
     /**
      * Decorate a given middleware for profiling
      */
-    public function wrap(callable $middleware): callable
+    private function wrap(callable $middleware): callable
     {
         return new ProfilerDecorator($middleware, $this);
     }
@@ -73,7 +73,7 @@ class Profiler
     /**
      * Reset profiling session
      */
-    public function reset(): void
+    private function reset(): void
     {
         if ($this->probe && $this->probe->isEnabled()) {
             $this->probe->close();

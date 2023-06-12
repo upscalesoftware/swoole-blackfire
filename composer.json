@@ -1,7 +1,7 @@
 {
     "name": "upscale/swoole-blackfire",
     "description": "Blackfire profiler integration for Swoole web-server",
-    "version": "4.1.0",
+    "version": "4.2.0",
     "keywords": ["Swoole", "Blackfire", "Blackfire.io", "profiler", "profiling", "integration", "companion"],
     "homepage": "https://github.com/upscalesoftware/swoole-blackfire",
     "license": "Apache-2.0",

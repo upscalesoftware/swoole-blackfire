@@ -15,7 +15,7 @@
         "php": ">=8.0",
         "blackfire/php-sdk": "^1.16||^2.0",
         "upscale/ext-swoole": "^4.0||^5.0",
-        "upscale/ext-openswoole": "^4.0||^22.0",
+        "upscale/ext-openswoole": "^4.0||^22.0||^25.2",
         "upscale/swoole-reflection": "^2.0||^3.0"
     },
     "require-dev": {

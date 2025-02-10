@@ -29,6 +29,7 @@ jobs:
           - openswoole-4.11.1
           - openswoole-4.12.1
           - openswoole-22.0.0
+          - openswoole-25.2.0
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
